@@ -2,7 +2,7 @@ import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/data_source/remote/login/login_datasource.dart';
 import 'package:ezy_course/data/repository/login_repository_impl.dart';
 import 'package:ezy_course/domain/use_cases/login/login_use_case.dart';
-import 'package:ezy_course/presentation/screens/login/login_screen.dart';
+import 'package:ezy_course/presentation/screens/home/home_screen.dart';
 import 'package:ezy_course/presentation/screens/login/state/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
                 fontFamily: "Figtree",
                 useMaterial3: true,
               ),
-              home: const LoginScreen(),
+              home: const HomeScreen(),
             ),
           );
         });

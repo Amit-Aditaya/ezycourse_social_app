@@ -39,6 +39,7 @@ dependencies:
   auto_size_text: ^3.0.0
   http: ^1.2.0
   flutter_bloc: ^9.0.0
+  timeago: ^3.6.0
 
 dev_dependencies:
   flutter_test:

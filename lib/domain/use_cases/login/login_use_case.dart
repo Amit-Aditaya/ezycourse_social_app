@@ -1,4 +1,4 @@
-import 'package:ezy_course/domain/entities/login_response.dart';
+import 'package:ezy_course/domain/entities/login/login_response.dart';
 import 'package:ezy_course/domain/repositories/login/login_repository.dart';
 
 class LoginUseCase {

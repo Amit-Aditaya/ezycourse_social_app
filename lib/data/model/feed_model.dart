@@ -11,56 +11,56 @@ String feedModelToJson(List<FeedModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class FeedModel {
-  final int id;
-  final int schoolId;
-  final int userId;
-  final dynamic courseId;
-  final int communityId;
-  final dynamic groupId;
-  final String feedTxt;
-  final Status status;
-  final String slug;
-  final String title;
-  final ActivityType activityType;
-  final int isPinned;
-  final FileType fileType;
-  final List<dynamic> files;
-  final int likeCount;
-  final int commentCount;
-  final int shareCount;
-  final int shareId;
-  final MetaDataClass metaData;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final FeedPrivacy feedPrivacy;
-  final int isBackground;
-  final String bgColor;
-  final dynamic pollId;
-  final dynamic lessonId;
-  final int spaceId;
-  final dynamic videoId;
-  final dynamic streamId;
-  final dynamic blogId;
-  final dynamic scheduleDate;
-  final String timezone;
-  final int isAnonymous;
-  final dynamic meetingId;
-  final dynamic sellerId;
-  final DateTime publishDate;
-  final bool isFeedEdit;
-  final String name;
-  final String pic;
-  final int uid;
-  final int isPrivateChat;
-  final User user;
-  final dynamic group;
-  final dynamic follow;
-  final List<LikeType> likeType;
-  final Like like;
-  final dynamic poll;
-  final dynamic savedPosts;
-  final List<dynamic> comments;
-  final PurpleMeta meta;
+  int id;
+  int schoolId;
+  int userId;
+  dynamic courseId;
+  int communityId;
+  dynamic groupId;
+  String feedTxt;
+  Status status;
+  String slug;
+  String title;
+  ActivityType activityType;
+  int isPinned;
+  FileType? fileType;
+  List<dynamic> files;
+  int likeCount;
+  int commentCount;
+  int shareCount;
+  int shareId;
+  MetaDataClass metaData;
+  DateTime createdAt;
+  DateTime updatedAt;
+  FeedPrivacy feedPrivacy;
+  int isBackground;
+  String? bgColor;
+  dynamic pollId;
+  dynamic lessonId;
+  int spaceId;
+  dynamic videoId;
+  dynamic streamId;
+  dynamic blogId;
+  dynamic scheduleDate;
+  String? timezone;
+  int? isAnonymous;
+  dynamic meetingId;
+  dynamic sellerId;
+  DateTime publishDate;
+  bool isFeedEdit;
+  String name;
+  String pic;
+  int uid;
+  int isPrivateChat;
+  User user;
+  dynamic group;
+  dynamic follow;
+  List<LikeType> likeType;
+  Like? like;
+  dynamic poll;
+  dynamic savedPosts;
+  List<dynamic> comments;
+  PurpleMeta meta;
 
   FeedModel({
     required this.id,
@@ -128,7 +128,7 @@ class FeedModel {
         title: json["title"],
         activityType: activityTypeValues.map[json["activity_type"]]!,
         isPinned: json["is_pinned"],
-        fileType: fileTypeValues.map[json["file_type"]]!,
+        fileType: fileTypeValues.map[json["file_type"]],
         files: List<dynamic>.from(json["files"].map((x) => x)),
         likeCount: json["like_count"],
         commentCount: json["comment_count"],
@@ -162,7 +162,7 @@ class FeedModel {
         follow: json["follow"],
         likeType: List<LikeType>.from(
             json["likeType"].map((x) => LikeType.fromJson(x))),
-        like: Like.fromJson(json["like"]),
+        like: json["like"] == null ? null : Like.fromJson(json["like"]),
         poll: json["poll"],
         savedPosts: json["savedPosts"],
         comments: List<dynamic>.from(json["comments"].map((x) => x)),
@@ -215,7 +215,7 @@ class FeedModel {
         "group": group,
         "follow": follow,
         "likeType": List<dynamic>.from(likeType.map((x) => x.toJson())),
-        "like": like.toJson(),
+        "like": like?.toJson(),
         "poll": poll,
         "savedPosts": savedPosts,
         "comments": List<dynamic>.from(comments.map((x) => x)),
@@ -236,14 +236,14 @@ enum FileType { TEXT }
 final fileTypeValues = EnumValues({"text": FileType.TEXT});
 
 class Like {
-  final int id;
-  final int feedId;
-  final int userId;
-  final String reactionType;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final int isAnonymous;
-  final MetaDataClass meta;
+  int id;
+  int feedId;
+  int userId;
+  String reactionType;
+  DateTime createdAt;
+  DateTime updatedAt;
+  int isAnonymous;
+  MetaDataClass meta;
 
   Like({
     required this.id,
@@ -288,9 +288,9 @@ class MetaDataClass {
 }
 
 class LikeType {
-  final String reactionType;
-  final int feedId;
-  final MetaDataClass meta;
+  String reactionType;
+  int feedId;
+  MetaDataClass meta;
 
   LikeType({
     required this.reactionType,
@@ -312,7 +312,7 @@ class LikeType {
 }
 
 class PurpleMeta {
-  final int views;
+  int views;
 
   PurpleMeta({
     required this.views,
@@ -332,15 +332,15 @@ enum Status { APPROVED }
 final statusValues = EnumValues({"APPROVED": Status.APPROVED});
 
 class User {
-  final int id;
-  final String fullName;
-  final String profilePic;
-  final int isPrivateChat;
-  final dynamic expireDate;
-  final String status;
-  final dynamic pauseDate;
-  final UserType userType;
-  final MetaDataClass meta;
+  int id;
+  String fullName;
+  String profilePic;
+  int isPrivateChat;
+  dynamic expireDate;
+  String? status;
+  dynamic pauseDate;
+  UserType userType;
+  MetaDataClass meta;
 
   User({
     required this.id,

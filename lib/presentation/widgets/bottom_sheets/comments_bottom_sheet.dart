@@ -1,57 +1,98 @@
+import 'package:ezy_course/core/utils/globals/globals.dart';
+import 'package:ezy_course/data/data_source/api_endpoints.dart';
+import 'package:ezy_course/data/data_source/remote/comment/comment_remote_datasource.dart';
+import 'package:ezy_course/data/repository/comment_repository_impl.dart';
+import 'package:ezy_course/domain/entities/comment/comment.dart';
+import 'package:ezy_course/domain/use_cases/comment/get_comment_use_case.dart';
+import 'package:ezy_course/presentation/widgets/bottom_sheets/state/bloc/comment_bloc.dart';
+import 'package:ezy_course/presentation/widgets/bottom_sheets/state/bloc/comment_event.dart';
+import 'package:ezy_course/presentation/widgets/bottom_sheets/state/bloc/comment_state.dart';
 import 'package:ezy_course/presentation/widgets/components/comment_widget.dart';
 import 'package:ezy_course/presentation/widgets/textfields/comment_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:http/http.dart' as http;
 
 class CommentsBottomSheet extends StatelessWidget {
-  const CommentsBottomSheet({super.key});
+  final int feedId;
+
+  const CommentsBottomSheet({super.key, required this.feedId});
 
   @override
   Widget build(BuildContext context) {
-    return CommentSection(
-      comments: [
-        Comment(
-          username: 'IAP Testing',
-          content:
-              '4 cup toakie my name is Amit and this is my first comment, hope you are are doing well. I am jsut testing is a really really really long comment',
-          timeAgo: '22d',
-          likes: 1,
-          replies: [
-            Comment(
-              username: 'User2',
-              content: 'Hhh...',
-              timeAgo: '22d',
-              likes: 0,
-              replies: [
-                Comment(
-                  username: 'User3',
-                  content: 'Nested reply',
-                  timeAgo: '21d',
-                  likes: 2,
-                ),
-              ],
-            ),
-          ],
-        ),
-        Comment(
-          username: 'AnotherUser',
-          content: 'Parent comment',
-          timeAgo: '1d',
-          likes: 3,
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => CommentBloc(
+          getCommentsUseCase: GetCommentsUseCase(
+              repository: CommentRepositoryImpl(
+                  remoteDataSource: CommentRemoteDataSourceImpl(
+                      client: http.Client(), baseUrl: ApiEndpoints.baseUrl))))
+        ..add(SetCommentParameters(token: Globals.token!, feedId: feedId))
+        ..add(FetchComments()),
+      child: BlocBuilder<CommentBloc, CommentState>(
+        builder: (context, state) {
+          if (state is CommentLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is CommentLoaded) {
+            return CommentSection(
+              comments: state.comments,
+              // comments: [
+              //   CommentUI(
+              //     username: state.comments[0].username,
+              //     content:
+              //         '4 cup toakie my name is Amit and this is my first comment, hope you are are doing well. I am jsut testing is a really really really long comment',
+              //     timeAgo: '22d',
+              //     likes: 1,
+              //     replies: [
+              //       CommentUI(
+              //         username: 'User2',
+              //         content: 'Hhh...',
+              //         timeAgo: '22d',
+              //         likes: 0,
+              //         replies: [
+              //           CommentUI(
+              //             username: 'User3',
+              //             content: 'Nested reply',
+              //             timeAgo: '21d',
+              //             likes: 2,
+              //           ),
+              //         ],
+              //       ),
+              //     ],
+              //   ),
+              //   CommentUI(
+              //     username: 'AnotherUser',
+              //     content: 'Parent comment',
+              //     timeAgo: '1d',
+              //     likes: 3,
+              //   ),
+              // ],
+            );
+          } else if (state is CommentError) {
+            return Center(
+              child: Text(state.message),
+            );
+          } else {
+            return Container(
+              color: Colors.teal,
+            );
+          }
+        },
+      ),
     );
   }
 }
 
-class Comment {
+class CommentUI {
   final String username;
   final String content;
   final String timeAgo;
   final int likes;
-  final List<Comment> replies;
+  final List<CommentUI> replies;
 
-  Comment({
+  CommentUI({
     required this.username,
     required this.content,
     required this.timeAgo,
@@ -88,15 +129,27 @@ class CommentSection extends StatelessWidget {
             SizedBox(
               height: .025.sh,
             ),
-            Expanded(
-              child: Container(
-                child: ListView.builder(
-                    itemCount: 5,
-                    itemBuilder: (context, index) {
-                      return const CommentWidget();
-                    }),
+            if (comments.isEmpty)
+              const Expanded(
+                child: Center(
+                  child: Text('No comments yet'),
+                ),
+              )
+            else
+              Expanded(
+                child: Container(
+                  child: ListView.builder(
+                      itemCount: comments.length,
+                      itemBuilder: (context, index) {
+                        return CommentWidget(
+                            createdAt: comments[index].createdAt,
+                            likeCount: comments[index].likeCount,
+                            replyCount: comments[index].replyCount,
+                            userName: comments[index].username,
+                            comment: comments[index].commentText);
+                      }),
+                ),
               ),
-            ),
             const CommentTextField(),
           ],
         ),

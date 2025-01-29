@@ -2,11 +2,24 @@ import 'package:ezy_course/core/theme/app_colors.dart';
 import 'package:ezy_course/core/utils/constants/app_images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:timeago/timeago.dart' as timeAgo;
 
 class CommentWidget extends StatelessWidget {
+  final String comment;
+  final String userName;
+  final int replyCount;
+  final int likeCount;
+  final DateTime createdAt;
   final bool? isSubComment;
 
-  const CommentWidget({super.key, this.isSubComment});
+  const CommentWidget(
+      {super.key,
+      required this.userName,
+      required this.comment,
+      this.isSubComment,
+      required this.replyCount,
+      required this.likeCount,
+      required this.createdAt});
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +56,14 @@ class CommentWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Amit Aditaya",
+                        userName,
                         style: TextStyle(
                             color: const Color(AppColors.black),
                             fontSize: 16.sp,
                             fontWeight: FontWeight.w600),
                       ),
                       Text(
-                        "asdasd asdasda asdasd asd asd asd sad m oksaodkoaskdoas aksodkaosdk aksdokasdopska asdasd asdasda asdasd asd asd asd sad m oksaodkoaskdoas aksodkaosdk aksdokasdopska asdasd asdasda asdasd asd asd asd sad m oksaodkoaskdoas aksodkaosdk aksdokasdopska",
+                        comment,
                         style: TextStyle(
                             color: const Color(AppColors.commentTextGrey),
                             fontSize: 16.sp,
@@ -68,7 +81,7 @@ class CommentWidget extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: .025.sw),
                         child: Text(
-                          "22h",
+                          timeAgo.format(createdAt),
                           style: TextStyle(
                               fontWeight: FontWeight.w400,
                               fontSize: 14.sp,
@@ -99,7 +112,7 @@ class CommentWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            "18",
+                            likeCount.toString(),
                             style: TextStyle(
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w600,

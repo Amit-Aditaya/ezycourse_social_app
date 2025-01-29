@@ -12,6 +12,7 @@ class SocialPost extends StatefulWidget {
   final String imageUrl;
   final int likes;
   final int comments;
+  final int feedId;
 
   const SocialPost({
     super.key,
@@ -22,6 +23,7 @@ class SocialPost extends StatefulWidget {
     required this.imageUrl,
     required this.likes,
     required this.comments,
+    required this.feedId,
   });
 
   @override
@@ -221,7 +223,9 @@ class _SocialPostState extends State<SocialPost> {
                                       topRight: Radius.circular(20.r),
                                     ),
                                   ),
-                                  child: const CommentsBottomSheet()),
+                                  child: CommentsBottomSheet(
+                                    feedId: widget.feedId,
+                                  )),
                             );
                           });
                     },
