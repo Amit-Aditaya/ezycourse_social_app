@@ -3,6 +3,7 @@ import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/data_source/remote/comment/comment_remote_datasource.dart';
 import 'package:ezy_course/data/repository/comment_repository_impl.dart';
 import 'package:ezy_course/domain/entities/comment/comment.dart';
+import 'package:ezy_course/domain/use_cases/comment/add_comment_use_case.dart';
 import 'package:ezy_course/domain/use_cases/comment/get_comment_use_case.dart';
 import 'package:ezy_course/presentation/widgets/bottom_sheets/state/bloc/comment_bloc.dart';
 import 'package:ezy_course/presentation/widgets/bottom_sheets/state/bloc/comment_event.dart';
@@ -23,6 +24,10 @@ class CommentsBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => CommentBloc(
+          addCommentUseCase: AddCommentsUseCase(
+              repository: CommentRepositoryImpl(
+                  remoteDataSource: CommentRemoteDataSourceImpl(
+                      client: http.Client(), baseUrl: ApiEndpoints.baseUrl))),
           getCommentsUseCase: GetCommentsUseCase(
               repository: CommentRepositoryImpl(
                   remoteDataSource: CommentRemoteDataSourceImpl(
@@ -104,7 +109,9 @@ class CommentUI {
 class CommentSection extends StatelessWidget {
   final List<Comment> comments;
 
-  const CommentSection({super.key, required this.comments});
+  final TextEditingController controller = TextEditingController();
+
+  CommentSection({super.key, required this.comments});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +157,16 @@ class CommentSection extends StatelessWidget {
                       }),
                 ),
               ),
-            const CommentTextField(),
+            CommentTextField(
+              controller: controller,
+              onTap: () {
+                context
+                    .read<CommentBloc>()
+                    .add(AddComment(comment: controller.text));
+
+                context.read<CommentBloc>().add(RefreshComments());
+              },
+            ),
           ],
         ),
       ),

@@ -19,4 +19,14 @@ class CommentRepositoryImpl implements CommentRepository {
       throw CommentException(e.toString());
     }
   }
+
+  @override
+  Future<bool> addComment(String token, int feedId, String comment) async {
+    try {
+      await remoteDataSource.addComment(token, feedId, comment);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
 }

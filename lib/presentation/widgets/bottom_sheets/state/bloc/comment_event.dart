@@ -10,3 +10,9 @@ class SetCommentParameters extends CommentEvent {
 class FetchComments extends CommentEvent {}
 
 class RefreshComments extends CommentEvent {}
+
+class AddComment extends CommentEvent {
+  final String comment;
+
+  AddComment({required this.comment});
+}

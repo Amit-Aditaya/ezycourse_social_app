@@ -1,9 +1,11 @@
 import 'package:ezy_course/core/exceptions/exceptions.dart';
+import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/model/comment_model.dart';
 import 'package:http/http.dart' as http;
 
 abstract class CommentRemoteDataSource {
   Future<List<CommentsModel>> getComments(String token, int feedId);
+  Future<bool> addComment(String token, int feedId, String comment);
 }
 
 class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
@@ -34,6 +36,28 @@ class CommentRemoteDataSourceImpl implements CommentRemoteDataSource {
       }
     } catch (e) {
       throw CommentException(e.toString());
+    }
+  }
+
+  @override
+  Future<bool> addComment(String token, int feedId, String comment) async {
+    try {
+      final response =
+          await client.post(Uri.parse(ApiEndpoints.addComment), headers: {
+        'Authorization': 'Bearer $token',
+      }, body: {
+        'feed_id': "226612",
+        "comment_txt": comment,
+        "commentSource": "COMMUNITY"
+      });
+
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      return false;
     }
   }
 }
