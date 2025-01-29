@@ -1,5 +1,6 @@
 import 'package:ezy_course/core/theme/app_colors.dart';
 import 'package:ezy_course/core/utils/constants/app_images.dart';
+import 'package:ezy_course/core/utils/globals/globals.dart';
 import 'package:ezy_course/presentation/screens/home/home_screen.dart';
 import 'package:ezy_course/presentation/screens/login/state/bloc/login_bloc.dart';
 import 'package:ezy_course/presentation/screens/login/state/bloc/login_event.dart';
@@ -165,6 +166,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 if (state is LoginSuccess) {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (_) => const HomeScreen()));
+
+                  Globals.token = state.token;
                 } else if (state is LoginError) {
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text(state.message)));

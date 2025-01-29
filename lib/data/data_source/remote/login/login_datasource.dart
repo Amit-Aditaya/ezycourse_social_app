@@ -26,11 +26,9 @@ class LoginDataSourceImpl implements LoginDataSource {
       );
 
       if (response.statusCode == 200) {
-        print(response.body);
         return json.decode(response.body);
       } else {
         final errorBody = json.decode(response.body);
-        print(errorBody);
         throw LoginException(errorBody['msg'] ?? 'Unknown error occurred');
       }
     } catch (e) {
