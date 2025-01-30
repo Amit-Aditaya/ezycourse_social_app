@@ -14,7 +14,7 @@ This app has been created as a task assesment for Appifylab. The application is 
 
 ## Download Link
 
-Apk - https://drive.google.com/file/d/1VclCOu8uZuapkAPvfM16TEOcJT8zH8Q7/view?usp=sharing
+Apk - https://drive.google.com/file/d/1URr5rKrDhn4DtgNqS68lZXsc2OthazUO/view?usp=sharing
 
 ## This App contains the following feature implementations:
 
