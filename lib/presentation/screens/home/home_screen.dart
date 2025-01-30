@@ -1,7 +1,7 @@
 import 'package:ezy_course/core/utils/globals/globals.dart';
 import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/data_source/remote/feed/feed_remote_datasource.dart';
-import 'package:ezy_course/data/repository/feed_repository_impl.dart';
+import 'package:ezy_course/data/repository/feed/feed_repository_impl.dart';
 import 'package:ezy_course/domain/use_cases/feed/get_feed_use_case.dart';
 import 'package:ezy_course/presentation/screens/create_post/create_post_screen.dart';
 import 'package:ezy_course/presentation/screens/home/state/bloc/feed_bloc.dart';

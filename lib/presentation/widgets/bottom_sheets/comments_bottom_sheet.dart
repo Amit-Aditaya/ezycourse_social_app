@@ -1,7 +1,7 @@
 import 'package:ezy_course/core/utils/globals/globals.dart';
 import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/data_source/remote/comment/comment_remote_datasource.dart';
-import 'package:ezy_course/data/repository/comment_repository_impl.dart';
+import 'package:ezy_course/data/repository/comment/comment_repository_impl.dart';
 import 'package:ezy_course/domain/entities/comment/comment.dart';
 import 'package:ezy_course/domain/use_cases/comment/add_comment_use_case.dart';
 import 'package:ezy_course/domain/use_cases/comment/get_comment_use_case.dart';

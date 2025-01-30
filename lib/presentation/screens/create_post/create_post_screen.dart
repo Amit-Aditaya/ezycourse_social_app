@@ -1,7 +1,7 @@
 import 'package:ezy_course/core/theme/app_colors.dart';
 import 'package:ezy_course/data/data_source/api_endpoints.dart';
 import 'package:ezy_course/data/data_source/remote/post/post_datasource.dart';
-import 'package:ezy_course/data/repository/post_repository_impl.dart';
+import 'package:ezy_course/data/repository/post/post_repository_impl.dart';
 import 'package:ezy_course/domain/use_cases/post/create_post_use_case.dart';
 import 'package:ezy_course/presentation/screens/create_post/state/bloc/post_bloc.dart';
 import 'package:ezy_course/presentation/widgets/scaffolds/primary_scaffold.dart';
