@@ -1,6 +1,6 @@
 # EzyCourse Social App
 
-This app has been created as a task assesment for Appifylab. The application is made with CLEAN Architecture along with the BloC state management library and has seperate layers for data, domain and presentation.
+This app has been created as a task assesment for Appifylab. The application is made with CLEAN Architecture along with the BloC state management library. I tried my best to showcase the CLEAN Architecture design principals, with the few Api's that I was able to implement.
 
 ## Setup Instructions
 
